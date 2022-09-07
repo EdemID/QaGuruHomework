@@ -41,6 +41,7 @@ public class UITest extends BaseTest {
                 .enterInFieldInput("Mobile", mobile)
                 .checkboxGender("Male")
                 .checkboxHobbies("Reading", "Sports")
+                .uploadPicture("img/picture.bmp")
                 .setDateOfBirthday(
                         String.valueOf(birthday.get(Calendar.DAY_OF_MONTH)),
                         birthday.getDisplayName(Calendar.MONTH, Calendar.LONG, new Locale("en")),

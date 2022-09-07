@@ -23,6 +23,7 @@ public class AutomationPracticeFormPage {
     private SelenideElement subjects = $("#subjectsWrapper");
     private SelenideElement currentAddress = $("#currentAddress");
     private SelenideElement stateAndCity = $("#stateCity-wrapper");
+    private SelenideElement uploadPicture = $("#uploadPicture");
     private String fieldPath = "//label[text()='%s']/ancestor::div[@class='mt-2 row']//input";
     private String checkboxPath = "//label[text()='%s']";
 
@@ -88,6 +89,13 @@ public class AutomationPracticeFormPage {
         Util.clickSubmit();
         return this;
     }
+
+    public AutomationPracticeFormPage uploadPicture(String filename) {
+        uploadPicture.uploadFromClasspath(filename);
+
+        return this;
+    }
+
 
     public void checkName(String name) {
         nameElement.parent().shouldHave(text(name));
