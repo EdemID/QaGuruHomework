@@ -11,28 +11,20 @@ import static com.codeborne.selenide.Selenide.open;
 
 public class UITest extends BaseTest {
 
-    private Calendar birthday;
-    private String firstName,
-            lastName,
-            email,
-            mobile,
-            currentAddress;
-
-    {
-        Faker faker = new Faker(new Locale("en"));
-        firstName = faker.name().firstName();
-        lastName = faker.name().lastName();
-        email = faker.internet().emailAddress();
-        mobile = faker.phoneNumber().subscriberNumber(10);
-        currentAddress = faker.address().fullAddress();
-        birthday = CustomDate.toCalendar(faker.date().birthday(10, 24));
-    }
+    Faker faker = new Faker(new Locale("en"));
 
     @Test
     void studentRegistration() {
+        var firstName = faker.name().firstName();
+        var lastName = faker.name().lastName();
+        var email = faker.internet().emailAddress();
+        var mobile = faker.phoneNumber().subscriberNumber(10);
+        var currentAddress = faker.address().fullAddress();
+        var birthday = CustomDate.toCalendar(faker.date().birthday(10, 24));
+
         open(props.automationPracticeFormURL());
 
-        AutomationPracticeFormPage automationPracticeFormPage = new AutomationPracticeFormPage();
+        var automationPracticeFormPage = new AutomationPracticeFormPage();
         automationPracticeFormPage.getFormHeader().shouldHave(text("Student Registration Form"));
 
         automationPracticeFormPage
