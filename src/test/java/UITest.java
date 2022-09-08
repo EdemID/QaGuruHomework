@@ -4,10 +4,12 @@ import org.junit.jupiter.api.Test;
 import pages.AutomationPracticeFormPage;
 
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
-import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selenide.open;
+import static helpers.CustomDate.calendarToString;
 
 public class UITest extends BaseTest {
 
@@ -25,12 +27,12 @@ public class UITest extends BaseTest {
         open(props.automationPracticeFormURL());
 
         var automationPracticeFormPage = new AutomationPracticeFormPage();
-        automationPracticeFormPage.getFormHeader().shouldHave(text("Student Registration Form"));
 
         automationPracticeFormPage
+                .checkTextInField("Student Registration Form")
                 .enterFirstNameAndLastName(firstName, lastName)
-                .enterInFieldInput("Email", email)
-                .enterInFieldInput("Mobile", mobile)
+                .enterEmail(email)
+                .enterMobile(mobile)
                 .checkboxGender("Male")
                 .checkboxHobbies("Reading", "Sports")
                 .uploadPicture("img/picture.bmp")
@@ -43,6 +45,11 @@ public class UITest extends BaseTest {
                 .setStateAndCity("NCR", "Gurgaon")
                 .clickSubmit();
 
-        automationPracticeFormPage.checkName(firstName + " " + lastName);
+        Map<String, String> expectedValues = new HashMap<>();
+        expectedValues.put("Student Name", firstName + " " + lastName);
+        expectedValues.put("Student Email", email);
+        expectedValues.put("Mobile", mobile);
+        expectedValues.put("Date of Birth", calendarToString(birthday));
+        automationPracticeFormPage.checkForm(expectedValues);
     }
 }

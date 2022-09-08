@@ -1,13 +1,13 @@
 package pages;
 
 import com.codeborne.selenide.SelenideElement;
-import helpers.CustomDate;
+import helpers.CustomAssertions;
 import helpers.Util;
 import org.openqa.selenium.Keys;
 
 import java.util.Arrays;
+import java.util.Map;
 
-import static com.codeborne.selenide.Condition.attribute;
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
 import static com.codeborne.selenide.Selenide.$;
@@ -15,63 +15,66 @@ import static com.codeborne.selenide.Selenide.$x;
 
 public class AutomationPracticeFormPage {
 
-    private SelenideElement formHeader = $(byText("Student Registration Form"));
-    private SelenideElement firstNameElement = $("#firstName");
-    private SelenideElement lastNameElement = $("#lastName");
-    private SelenideElement nameElement = $(byText("Student Name"));
-    private SelenideElement gender = $("#genterWrapper");
-    private SelenideElement subjects = $("#subjectsWrapper");
-    private SelenideElement currentAddress = $("#currentAddress");
-    private SelenideElement stateAndCity = $("#stateCity-wrapper");
-    private SelenideElement uploadPicture = $("#uploadPicture");
-    private String fieldPath = "//label[text()='%s']/ancestor::div[@class='mt-2 row']//input";
-    private String checkboxPath = "//label[text()='%s']";
+    private final SelenideElement uploadPicture = $("#uploadPicture");
+    private final SelenideElement subjects = $("#subjectsWrapper");
+    private final SelenideElement stateAndCity = $("#stateCity-wrapper");
 
-    public SelenideElement getFormHeader() {
-        return formHeader;
+    public AutomationPracticeFormPage checkTextInField(String expectedText) {
+
+        CustomAssertions.assertShouldHave($(byText("Student Registration Form")), text(expectedText));
+        return this;
     }
 
     public AutomationPracticeFormPage enterFirstNameAndLastName(String firstName, String lastName) {
-        firstNameElement.shouldHave(attribute("placeholder", "First Name")).val(firstName);
-        lastNameElement.shouldHave(attribute("placeholder", "Last Name")).val(lastName);
+        $("#firstName").setValue(firstName);
+        $("#lastName").setValue(lastName);
 
         return this;
     }
 
-    public AutomationPracticeFormPage enterInFieldInput(String field, String value) {
-        $x(String.format(fieldPath, field)).val(value);
+    public AutomationPracticeFormPage enterEmail(String email) {
+        $("#userEmail").setValue(email);
+
+        return this;
+    }
+
+    public AutomationPracticeFormPage enterMobile(String mobile) {
+        $("#userNumber").setValue(mobile);
 
         return this;
     }
 
     public AutomationPracticeFormPage checkboxGender(String value) {
-        gender.$(byText(value)).click();
+        $("#genterWrapper").$(byText(value)).click();
 
         return this;
     }
 
     public AutomationPracticeFormPage checkboxHobbies(String... values) {
         for (String value : values) {
-            $x(String.format(checkboxPath, value)).click();
+            $x(String.format("//label[text()='%s']", value)).click();
         }
         return this;
     }
 
     public AutomationPracticeFormPage setDateOfBirthday(String day, String month, String year) {
-        CustomDate.setDate(day, month, year);
+        $(".react-datepicker-wrapper").click();
+        $(".react-datepicker__year-select").selectOption(year);
+        $(".react-datepicker__month-select").selectOption(month);
+        $(".react-datepicker__month").$(byText(day)).click();
 
         return this;
     }
 
     public AutomationPracticeFormPage setSubjects(String... values) {
         Arrays.stream(values).forEach(value -> {
-            subjects.$("input").val(value).sendKeys(Keys.RETURN);
+            subjects.$("input").setValue(value).sendKeys(Keys.RETURN);
         });
         return this;
     }
 
     public AutomationPracticeFormPage setCurrentAddress(String value) {
-        currentAddress.setValue(value);
+        $("#currentAddress").setValue(value);
 
         return this;
     }
@@ -87,6 +90,7 @@ public class AutomationPracticeFormPage {
 
     public AutomationPracticeFormPage clickSubmit() {
         Util.clickSubmit();
+
         return this;
     }
 
@@ -97,7 +101,11 @@ public class AutomationPracticeFormPage {
     }
 
 
-    public void checkName(String name) {
-        nameElement.parent().shouldHave(text(name));
+    public void checkForm(Map<String, String> expectedValues) {
+        $("#example-modal-sizes-title-lg").shouldHave(text("Thanks for submitting the form"));
+
+        for (Map.Entry<String, String> entry : expectedValues.entrySet()) {
+            CustomAssertions.assertShouldHave($(".table-responsive").$(byText(entry.getKey())).parent(), text(entry.getValue()));
+        }
     }
 }
