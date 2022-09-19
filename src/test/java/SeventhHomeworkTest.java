@@ -11,7 +11,7 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.open;
 import static helpers.CustomDate.calendarToString;
 
-public class UITest extends BaseTest {
+public class SeventhHomeworkTest extends BaseTest {
 
     Faker faker = new Faker(new Locale("en"));
 
