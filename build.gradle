@@ -14,6 +14,8 @@ dependencies {
     implementation 'com.codeborne:selenide:6.7.3'
     implementation group: 'org.aeonbits.owner', name: 'owner', version: '1.0.4'
     implementation group: 'com.github.javafaker', name: 'javafaker', version: '1.0.2'
+    implementation group: 'org.apache.pdfbox', name: 'pdfbox', version: '2.0.1'
+    implementation group: 'org.apache.poi', name: 'poi-ooxml', version: '3.9'
 }
 
 test {
