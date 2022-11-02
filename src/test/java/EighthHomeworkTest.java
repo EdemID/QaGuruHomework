@@ -31,7 +31,8 @@ public class EighthHomeworkTest {
         assertNotNull(unit);
     }
 
-    @ParameterizedTest(name = "Без указания value, так как указан тип параметра enum")
+    @ParameterizedTest
+    @DisplayName("Без указания value, так как указан тип параметра enum")
     @EnumSource
     void testWithEnumSource(ChronoUnit unit) {
         assertNotNull(unit);
