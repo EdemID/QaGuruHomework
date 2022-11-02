@@ -1,3 +1,5 @@
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dto.Pim;
 import helpers.CustomZip;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.text.PDFTextStripper;
@@ -112,5 +114,15 @@ public class NinthHomeworkTest {
         } catch(Exception e){
             e.printStackTrace();
         }
+    }
+
+    @Test
+    void parsingJson() throws IOException {
+        File file = new File("src/test/resources/dataForNinthHomework/pim-dim.json");
+        ObjectMapper mapper = new ObjectMapper();
+        Pim pim = mapper.readValue(file, Pim.class);
+
+        String expectedName = "Dim";
+        Assertions.assertEquals(expectedName, pim.getDim().getName());
     }
 }
