@@ -137,7 +137,14 @@ public class CustomZip {
                 var is = file.getInputStream(entry);
                 var bis = new BufferedInputStream(is)
         ) {
-            var uncompressedFileName = uncompressedDirectory + entry.getName();
+            var filenameWithDirectory = entry.getName();
+            var splitter = File.separator.replace("\\","\\\\");
+            var directoryAndFile = filenameWithDirectory.split(splitter);
+            var directory = new File(uncompressedDirectory + directoryAndFile[0]);
+            if (!directory.exists()) {
+                directory.mkdirs();
+            }
+            var uncompressedFileName = directory + File.separator + directoryAndFile[1];
             try (
                     var os = new FileOutputStream(uncompressedFileName);
                     var bos = new BufferedOutputStream(os)
