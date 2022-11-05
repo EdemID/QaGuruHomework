@@ -18,8 +18,8 @@ public abstract class BaseTest {
 
     @BeforeAll
     static void beforeAllTests() {
-        options.addArguments("--lang=ru-ru");
-        options.addArguments("--start-maximized");
+        options.addArguments("lang=ru-ru");
+        options.addArguments("start-maximized");
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         capabilities.setCapability("enableVNC", true);
         capabilities.setCapability("enableVideo", true);
