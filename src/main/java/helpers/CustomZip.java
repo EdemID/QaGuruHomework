@@ -93,9 +93,7 @@ public class CustomZip {
         if (Files.notExists(packageForZip)) {
             packageForZip.toFile().mkdir();
         }
-        if (zipArchiveName == null) {
-            zipArchiveName = getFilenamesWithSpecificExtensionFromDirectory(packageWithZip, "zip").get(0);
-        }
+        zipArchiveName = getFilenamesWithSpecificExtensionFromDirectory(packageWithZip, "zip").get(0);
         try (var file = new ZipFile(zipArchiveName)) {
             var entries = file.entries();
             var uncompressedDirectory = packageForZip + File.separator;

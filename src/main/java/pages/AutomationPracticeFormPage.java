@@ -58,7 +58,7 @@ public class AutomationPracticeFormPage {
     @Step("Выбрать хобби: {values}")
     public AutomationPracticeFormPage checkboxHobbies(String... values) {
         for (String value : values) {
-            $x(String.format("//label[text()='%s']", value)).click();
+            $x(String.format("//body//label[text()='%s']", value)).click();
         }
         return this;
     }
@@ -73,7 +73,7 @@ public class AutomationPracticeFormPage {
         return this;
     }
 
-    @Step("Отметить субъекты: {values}")
+    @Step("Вписать субъекты: {values}")
     public AutomationPracticeFormPage setSubjects(String... values) {
         Arrays.stream(values).forEach(value -> {
             subjects.$("input").setValue(value).sendKeys(Keys.RETURN);
@@ -90,9 +90,9 @@ public class AutomationPracticeFormPage {
 
     @Step("Заполнить: {state} и {city}")
     public AutomationPracticeFormPage setStateAndCity(String state, String city) {
-        stateAndCity.$(byText("Select State")).click();
+        stateAndCity.$x("//body//div[text()='Select State']").click();
         stateAndCity.$(byText(state)).click();
-        stateAndCity.$(byText("Select City")).click();
+        stateAndCity.$x("//body//div[text()='Select City']").click();
         stateAndCity.$(byText(city)).click();
 
         return this;
