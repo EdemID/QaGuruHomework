@@ -2,8 +2,10 @@ package helpers;
 
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import static com.codeborne.selenide.Selenide.$;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class Util {
 
@@ -11,5 +13,9 @@ public class Util {
 
     public static void clickSubmit() {
         submit.sendKeys(Keys.RETURN);
+    }
+
+    public static String getSessionId(){
+        return ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
     }
 }

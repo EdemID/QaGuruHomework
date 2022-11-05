@@ -2,6 +2,7 @@ import com.codeborne.selenide.Configuration;
 import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.interfaces.Props;
+import helpers.CustomAttachments;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -22,6 +23,7 @@ public abstract class BaseTest {
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
         Configuration.browserCapabilities = capabilities;
         Configuration.baseUrl = "https://demoqa.com";
+        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
     }
 
     @BeforeEach
@@ -33,5 +35,13 @@ public abstract class BaseTest {
     @AfterEach
     void afterEachTest() {
         Selenide.closeWebDriver();
+    }
+
+    @AfterEach
+    void addAttachments() {
+        CustomAttachments.screenshotAs("Скриншот последней страницы");
+        CustomAttachments.pageSource();
+        CustomAttachments.browserConsoleLogs();
+        CustomAttachments.addVideo();
     }
 }
