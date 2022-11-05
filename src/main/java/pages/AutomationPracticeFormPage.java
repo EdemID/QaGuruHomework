@@ -5,14 +5,15 @@ import helpers.CustomAssertions;
 import helpers.Util;
 import io.qameta.allure.Step;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 
 import java.util.Arrays;
 import java.util.Map;
 
 import static com.codeborne.selenide.Condition.text;
 import static com.codeborne.selenide.Selectors.byText;
-import static com.codeborne.selenide.Selenide.$;
-import static com.codeborne.selenide.Selenide.$x;
+import static com.codeborne.selenide.Selenide.*;
+import static com.codeborne.selenide.WebDriverRunner.getWebDriver;
 
 public class AutomationPracticeFormPage {
 
@@ -21,7 +22,8 @@ public class AutomationPracticeFormPage {
     private final SelenideElement stateAndCity = $("#stateCity-wrapper");
 
     public AutomationPracticeFormPage checkTextInField(String expectedText) {
-
+        executeJavaScript("$('footer').remove()");
+        executeJavaScript("$('#fixedban').remove()");
         CustomAssertions.assertShouldHave($(byText("Student Registration Form")), text(expectedText));
         return this;
     }
@@ -57,8 +59,11 @@ public class AutomationPracticeFormPage {
 
     @Step("Выбрать хобби: {values}")
     public AutomationPracticeFormPage checkboxHobbies(String... values) {
+        Actions actions = new Actions(getWebDriver());
         for (String value : values) {
-            $x(String.format("//label[text()='%s']", value)).click();
+            actions.moveToElement($x(String.format("//label[text()='%s']", value)));
+            actions.click();
+            actions.build().perform();
         }
         return this;
     }
@@ -90,10 +95,10 @@ public class AutomationPracticeFormPage {
 
     @Step("Заполнить: {state} и {city}")
     public AutomationPracticeFormPage setStateAndCity(String state, String city) {
-        $("#state").click();
-        $("#stateCity-wrapper").$(byText(state)).click();
-        $("#city").click();
-        $("#stateCity-wrapper").$(byText(city)).click();
+        stateAndCity.$(byText("Select State")).click();
+        stateAndCity.$(byText(state)).click();
+        stateAndCity.$(byText("Select City")).click();
+        stateAndCity.$(byText(city)).click();
         return this;
     }
 
