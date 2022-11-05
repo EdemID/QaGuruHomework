@@ -21,6 +21,8 @@ public abstract class BaseTest {
         options.addArguments("--lang=ru-ru");
         options.addArguments("--start-maximized");
         capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        capabilities.setCapability("enableVNC", true);
+        capabilities.setCapability("enableVideo", true);
         Configuration.browserCapabilities = capabilities;
         Configuration.baseUrl = "https://demoqa.com";
         Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
