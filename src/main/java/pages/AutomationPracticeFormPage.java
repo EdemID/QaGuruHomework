@@ -58,7 +58,7 @@ public class AutomationPracticeFormPage {
     @Step("Выбрать хобби: {values}")
     public AutomationPracticeFormPage checkboxHobbies(String... values) {
         for (String value : values) {
-            $x(String.format("//body//label[text()='%s']", value)).click();
+            $x(String.format("//label[text()='%s']", value)).click();
         }
         return this;
     }
@@ -90,11 +90,10 @@ public class AutomationPracticeFormPage {
 
     @Step("Заполнить: {state} и {city}")
     public AutomationPracticeFormPage setStateAndCity(String state, String city) {
-        stateAndCity.$x("//body//div[text()='Select State']").click();
-        stateAndCity.$(byText(state)).click();
-        stateAndCity.$x("//body//div[text()='Select City']").click();
-        stateAndCity.$(byText(city)).click();
-
+        $("#state").click();
+        $("#stateCity-wrapper").$(byText(state)).click();
+        $("#city").click();
+        $("#stateCity-wrapper").$(byText(city)).click();
         return this;
     }
 
