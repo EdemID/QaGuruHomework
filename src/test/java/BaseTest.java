@@ -3,6 +3,7 @@ import com.codeborne.selenide.Selenide;
 import com.codeborne.selenide.logevents.SelenideLogger;
 import config.interfaces.Props;
 import helpers.CustomAttachments;
+import helpers.Util;
 import io.qameta.allure.selenide.AllureSelenide;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
@@ -17,15 +18,20 @@ public abstract class BaseTest {
     private static ChromeOptions options = new ChromeOptions();
 
     @BeforeAll
-    static void beforeAllTests() {
-        options.addArguments("lang=ru-ru");
-        options.addArguments("start-maximized");
-        capabilities.setCapability(ChromeOptions.CAPABILITY, options);
-        capabilities.setCapability("enableVNC", true);
-        capabilities.setCapability("enableVideo", true);
+    static void config() {
+        Configuration.baseUrl = System.getProperty("baseUrl", "https://demoqa.com");  // "https://demoqa.com"
+        Configuration.browser = System.getProperty("browserName", "chrome");
+        if (Util.getPropertyRemoteUrl() != null) {
+            Configuration.browserSize = System.getProperty("browserSize");
+            Configuration.remote = Util.getPropertyRemoteUrl(); // "https://user1:1234@selenoid.autotests.cloud/wd/hub"
+            capabilities.setCapability("enableVNC", true);
+            capabilities.setCapability("enableVideo", true);
+        } else {
+            options.addArguments("lang=ru-ru");
+            options.addArguments("start-maximized");
+            capabilities.setCapability(ChromeOptions.CAPABILITY, options);
+        }
         Configuration.browserCapabilities = capabilities;
-        Configuration.baseUrl = "https://demoqa.com";
-        Configuration.remote = "https://user1:1234@selenoid.autotests.cloud/wd/hub";
     }
 
     @BeforeEach
@@ -44,6 +50,8 @@ public abstract class BaseTest {
         CustomAttachments.screenshotAs("Скриншот последней страницы");
         CustomAttachments.pageSource();
         CustomAttachments.browserConsoleLogs();
-        CustomAttachments.addVideo();
+        if (System.getProperty("conf.remote") != null) {
+            CustomAttachments.addVideo();
+        }
     }
 }
