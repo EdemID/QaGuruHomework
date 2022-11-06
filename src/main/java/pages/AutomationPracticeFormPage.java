@@ -4,7 +4,6 @@ import com.codeborne.selenide.SelenideElement;
 import helpers.CustomAssertions;
 import helpers.Util;
 import io.qameta.allure.Step;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 
 import java.util.Arrays;
@@ -81,7 +80,7 @@ public class AutomationPracticeFormPage {
     @Step("Вписать субъекты: {values}")
     public AutomationPracticeFormPage setSubjects(String... values) {
         Arrays.stream(values).forEach(value -> {
-            subjects.$("input").setValue(value).sendKeys(Keys.RETURN);
+            subjects.$("input").setValue(value);
         });
         return this;
     }

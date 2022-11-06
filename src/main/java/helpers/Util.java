@@ -18,8 +18,4 @@ public class Util {
     public static String getSessionId(){
         return ((RemoteWebDriver) getWebDriver()).getSessionId().toString();
     }
-
-    public static String getPropertyRemoteUrl() {
-        return System.getProperty("conf.remote");
-    }
 }
