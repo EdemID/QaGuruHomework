@@ -1,5 +1,6 @@
 import com.github.javafaker.Faker;
 import helpers.CustomDate;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import pages.AutomationPracticeFormPage;
 
@@ -11,6 +12,7 @@ import java.util.Map;
 import static com.codeborne.selenide.Selenide.open;
 import static helpers.CustomDate.calendarToString;
 
+@Tag("studentRegistration")
 public class SeventhHomeworkTest extends BaseTest {
 
     Faker faker = new Faker(new Locale("en"));

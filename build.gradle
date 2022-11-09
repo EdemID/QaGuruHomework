@@ -50,6 +50,13 @@ tasks.withType(Test) {
         }
     }
 }
+
+task studentRegistration_test(type: Test) {
+    useJUnitPlatform{
+        includeTags("studentRegistration")
+    }
+}
+
 compileJava {
     options.encoding = 'UTF-8'
 }

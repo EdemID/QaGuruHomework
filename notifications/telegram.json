@@ -1,0 +1,16 @@
+{
+  "base": {
+    "project": "${JOB_BASE_NAME}",
+    "environment": "Homework 14",
+    "comment": "Test project",
+    "reportLink": "${BUILD_URL}",
+    "language": "en",
+    "allureFolder": "allure-report/",
+    "enableChart": true
+  },
+  "telegram": {
+    "token": "5717155674:AAEDzsYicme7St6uCDu1RY3dGSopPOGhW6c",
+    "chat": "-1001891888377",
+    "replyTo": ""
+  }
+}
